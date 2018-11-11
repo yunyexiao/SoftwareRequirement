@@ -1,23 +1,22 @@
 # 操作契约
 
 ## 送餐员平台
-|名称|getMeal|
-|---|---|
-|引用用例|用例11|
-|前置条件|1. 送餐员已接此单|
-||2. 送餐员已到店取餐完毕|
-|后置条件|1. 更新此订单状态为已接单|
+Context Deliverman::getMeal(order: Order): void
 
-|名称|completed|
-|---|---|
-|引用用例|用例11|
-|前置条件|1. 送餐员成功将餐送至顾客手中|
-|后置条件|1. 更新此订单状态为已完成|
-||2. 将此订单从送餐员待送订单列表中删除|
-||3. 更新送餐员的送餐数据|
+	Pre: self.isLoggedIn = true and order.deliverman = self
 
-|名称||
-|---|---|
-|引用用例||
-|前置条件||
-|后置条件||
+	Post: order.state = deliverying
+
+Context Deliverman::finish(order: Order): void
+
+	Pre: self.isLoggedIn = true and order.deliverman = self
+
+	Post: order.state = finished and self.deliveryingList->count = self
+	.deliveryingList->count@pre - 1 and self.todayOrders->count = self
+	.todayOrders->count@pre - 1 and self.monthlyOrders->count = self
+	.monthlyOrders->count@pre - 1
+
+Context Deliverman::chooseOrders(orders: Set(Order)): boolean
+
+	Pre: self.isLoggedIn = true and NewestOrderList->count > 0
+
