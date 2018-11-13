@@ -42,18 +42,15 @@ Context Deliverman::chooseOrders(orders: Set(Order)): boolean
 
 
 ## 总经理平台
-Context Manager::manageDishes(dishes: Set(Dish)): void
+Context Manager::seeOrders(orders: Set(Order)): void
+
+	Pre: self.isLoggedIn = true and OrderList->count > 0
 	
-	Pre: self.isLoggedIn = true
-
-Context Manager::manageOrders(orders: Set(Order)): void
+Context Manager::setSpecials(dishes: Dish): void
 
 	Pre: self.isLoggedIn = true
-	
-Context Manager::managePromotions(promotions: Set(Promotion)): void
-
-	Pre: self.isLoggedIn = true
+	Post: dishes->specialPrice > 0 and dishes->specialPrice < dishes->originPrice
 	
 Context Manager::seeStatistics(): void
 
-	Pre: self.isLoggedIn = true
+	Pre: self.isLoggedIn = true and OrderList->count > 0
