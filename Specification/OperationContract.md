@@ -1,4 +1,24 @@
 # 操作契约
+## 顾客平台
+Context Customer::orderDish(dish: Dish): void
+
+  	Pre: self.isLoggedIn = true
+  	
+  	Post: self.order->count = self.order->count@pre + 1
+	
+Context Customer::pay(): void
+
+  	Pre: self.isLoggedIn = true and order->count > 0
+  	
+  	Post: order->state = waitingForPaying
+
+	
+Context Customer::finishPay(): void
+
+  	Pre: self.isLoggedIn = true and self.hasAddress = true and self.hasPayway = true and self.isPasswordValid = true
+  	
+  	Post: order->state = accepting and ordList->count = orderList->count@pre + 1
+
 
 ## 送餐员平台
 Context Deliverman::getMeal(order: Order): void
