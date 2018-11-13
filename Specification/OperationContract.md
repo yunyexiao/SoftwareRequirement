@@ -40,3 +40,20 @@ Context Deliverman::chooseOrders(orders: Set(Order)): boolean
 
 	Pre: self.isLoggedIn = true and NewestOrderList->count > 0
 
+
+## 总经理平台
+Context Manager::manageDishes(dishes: Set(Dish)): void
+	
+	Pre: self.isLoggedIn = true
+
+Context Manager::manageOrders(orders: Set(Order)): void
+
+	Pre: self.isLoggedIn = true
+	
+Context Manager::managePromotions(promotions: Set(Promotion)): void
+
+	Pre: self.isLoggedIn = true
+	
+Context Manager::seeStatistics(): void
+
+	Pre: self.isLoggedIn = true
