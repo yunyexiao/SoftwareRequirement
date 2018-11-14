@@ -40,6 +40,22 @@ Context Deliverman::chooseOrders(orders: Set(Order)): boolean
 
 	Pre: self.isLoggedIn = true and NewestOrderList->count > 0
 
+
+## 总经理平台
+Context Manager::seeOrders(orders: Set(Order)): void
+
+	Pre: self.isLoggedIn = true and OrderList->count > 0
+	
+Context Manager::setSpecials(dishes: Dish): void
+
+	Pre: self.isLoggedIn = true
+	Post: dishes->specialPrice > 0 and dishes->specialPrice < dishes->originPrice
+	
+Context Manager::seeStatistics(): void
+
+	Pre: self.isLoggedIn = true and OrderList->count > 0
+
+
 ## 送餐员管理平台
 Context Manager::getDelivermanList(search: String): List
 
@@ -59,7 +75,8 @@ Context Manager::dismissDeliverman(delivermanId: Integer): DatabaseResponse
 	
 	Post: DelivermanList-> count --
 	
-## 送餐员管理平台
+  
+## 应聘者管理平台
 Context Manager::getApplicantList(search: String): List
 
 	Pre: Manager.isLoggedIn = true
@@ -84,6 +101,7 @@ Context Manager::ignoreApplicant(applicantId: Integer): DatabaseResponse
 	
 	Post: ApplicantList-> count --
 
+
 ## 应聘平台
 Context Applicant::submitBasicForm(basicInfo: Form): VerifyingResponse
 	
@@ -100,3 +118,4 @@ Context Applicant::verifyInfo(): VerifyingResponse
 	Pre: Applicant.verifyBasicInfo = true and Applicant.verifyFace = true
 	
 	Post: Applicant.approved = false and Database->save(Applicant.info)
+
